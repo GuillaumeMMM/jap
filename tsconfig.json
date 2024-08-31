@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "experimentalDecorators": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"],
+}
