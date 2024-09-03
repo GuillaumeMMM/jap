@@ -1,0 +1,6 @@
+@import "./variables.css";
+
+body {
+  font-family: "system-ui", sans-serif;
+  background-color: var(--background);
+}
