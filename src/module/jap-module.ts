@@ -3,8 +3,9 @@ import { customElement, property } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import { Task } from "@lit/task";
 import sharedCSS from "../styles/shared.js";
-import { Routes } from "@lit-labs/router/routes.js";
 import "./jap-module-summary";
+import "./jap-module-exercise";
+import "./jap-module-router";
 
 @customElement("jap-module")
 export class JapModule extends LitElement {
@@ -23,25 +24,12 @@ export class JapModule extends LitElement {
     args: () => [this.moduleId],
   });
 
-  private _routes = new Routes(this, [
-    {
-      path: "",
-      render: () =>
-        html`${this._modulesTask.render({
-          pending: () => html`<p>Loading module...</p>`,
-          complete: (data) => html`
-            <jap-module-summary .module=${data}></jap-module-summary>
-          `,
-          error: (e) => html`<p>Error: ${e}</p>`,
-        })}`,
-    },
-    {
-      path: "exercise",
-      render: () => html`exercise`,
-    },
-  ]);
-
   render() {
-    return html`${this._routes.outlet()}`;
+    return html`${this._modulesTask.render({
+      pending: () => html`<p>Loading module...</p>`,
+      complete: (data) =>
+        html`<jap-module-router .module=${data}></jap-module-router>`,
+      error: (e) => html`<p>Error: ${e}</p>`,
+    })}`;
   }
 }
