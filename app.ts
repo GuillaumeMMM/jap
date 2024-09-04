@@ -13,7 +13,7 @@ export class App extends LitElement {
     { path: "/", render: () => html`<jap-home></jap-home>` },
     { path: "/modules", render: () => html`<jap-modules></jap-modules>` },
     {
-      path: "/module/:id",
+      path: "/module/:id/*",
       render: (params) => {
         return html`<jap-module moduleId=${ifDefined(params.id)}></jap-module>`;
       },

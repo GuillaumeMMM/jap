@@ -28,7 +28,7 @@ export class JapModules extends LitElement {
             ${data.modules.map(
               (module) =>
                 html`<li>
-                  <a href="/module/${module.id}">${module.name}</a>
+                  <a href="/module/${module.id}/">${module.name}</a>
                 </li>`
             )}
           </ul>

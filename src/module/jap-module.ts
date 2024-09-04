@@ -3,6 +3,8 @@ import { customElement, property } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import { Task } from "@lit/task";
 import sharedCSS from "../styles/shared.js";
+import { Routes } from "@lit-labs/router/routes.js";
+import "./jap-module-summary";
 
 @customElement("jap-module")
 export class JapModule extends LitElement {
@@ -12,7 +14,6 @@ export class JapModule extends LitElement {
 
   private _modulesTask = new Task(this, {
     task: async ([], { signal }) => {
-      const id = new URL(location.href).searchParams.get("id");
       const response = await fetch(
         `https://guillaume-getjapmodules.web.val.run?id=${this.moduleId}`,
         { signal }
@@ -22,38 +23,25 @@ export class JapModule extends LitElement {
     args: () => [this.moduleId],
   });
 
-  /* private _routes = new Routes(this, [
+  private _routes = new Routes(this, [
     {
       path: "",
-      render: () => html`<h1>Module</h1>
-        ${this._modulesTask.render({
+      render: () =>
+        html`${this._modulesTask.render({
           pending: () => html`<p>Loading module...</p>`,
           complete: (data) => html`
-            <h2>${data.name}</h2>
-            <ul>
-              ${data.cards.map(
-                (card) => html`<li>${card.q} -> ${card.a[0]}</li>`
-              )}
-            </ul>
+            <jap-module-summary .module=${data}></jap-module-summary>
           `,
           error: (e) => html`<p>Error: ${e}</p>`,
         })}`,
     },
-  ]); */
+    {
+      path: "exercise",
+      render: () => html`exercise`,
+    },
+  ]);
 
   render() {
-    return html`<h1>Module</h1>
-      ${this._modulesTask.render({
-        pending: () => html`<p>Loading module...</p>`,
-        complete: (data) => html`
-          <h2>${data.name}</h2>
-          <ul>
-            ${data.cards.map(
-              (card) => html`<li>${card.q} -> ${card.a[0]}</li>`
-            )}
-          </ul>
-        `,
-        error: (e) => html`<p>Error: ${e}</p>`,
-      })}`;
+    return html`${this._routes.outlet()}`;
   }
 }
