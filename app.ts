@@ -10,7 +10,7 @@ import "./src/module/jap-module";
 @customElement("jap-app")
 export class App extends LitElement {
   private _routes = new Router(this, [
-    { path: "/", render: () => html`<jap-home></jap-home>` },
+    { path: "/", render: () => html`<jap-modules></jap-modules>` },
     { path: "/modules", render: () => html`<jap-modules></jap-modules>` },
     {
       path: "/module/:id/*",

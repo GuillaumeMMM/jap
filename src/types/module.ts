@@ -8,3 +8,5 @@ export type Module = {
   name: string;
   cards: ModuleCard[];
 };
+
+export type Answers = Map<string, { isCorrect: boolean }>;

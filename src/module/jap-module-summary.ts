@@ -12,7 +12,7 @@ export class JapModuleSummary extends LitElement {
 
   render() {
     return html`${this.module.name}
-      <div><a href="../modules">Back to modules</a></div>
+      <div><a href="/modules">Back to modules</a></div>
       <div><a href="./exercise">Run Exercise</a></div>`;
   }
 }

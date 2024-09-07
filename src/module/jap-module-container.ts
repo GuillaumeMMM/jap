@@ -23,7 +23,7 @@ export class JapModuleContainer extends LitElement {
   }
 
   protected firstUpdated(): void {
-    this._cards = this.shuffleCards(this.module.cards);
+    this._cards = this.shuffleCards(this.module.cards).slice(0, 2);
   }
 
   private _routes = new Routes(this, [

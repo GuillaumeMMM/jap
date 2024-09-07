@@ -2,7 +2,7 @@ import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
-import { Module, ModuleCard } from "../types/module";
+import { Answers, Module, ModuleCard } from "../types/module";
 import "./jap-module-success";
 import { createRef, Ref, ref } from "lit/directives/ref.js";
 
@@ -21,6 +21,7 @@ export class JapModuleExercise extends LitElement {
   inputRef: Ref<HTMLInputElement> = createRef();
   nextButtonRef: Ref<HTMLButtonElement> = createRef();
   isLastQ: boolean = false;
+  answersRecap: Answers = new Map();
 
   firstUpdated() {
     this.inputRef.value.focus();
@@ -58,6 +59,10 @@ export class JapModuleExercise extends LitElement {
       this._typedValue
     );
 
+    this.answersRecap.set(this.cards[this._currentQIndex].q, {
+      isCorrect: !this._isWrong,
+    });
+
     if (this.isLastQ && !this._isWrong) {
       this._isDone = true;
       return;
@@ -82,7 +87,11 @@ export class JapModuleExercise extends LitElement {
     const currentCard = this.cards[this._currentQIndex];
     return html`
       ${this._isDone
-        ? html`<jap-module-success .module=${this.module}></jap-module-success>`
+        ? html`<jap-module-success
+            .module=${this.module}
+            .cards=${this.cards}
+            .answersRecap=${this.answersRecap}
+          ></jap-module-success>`
         : html`<div><a href="./">Back to exercise</a></div>
             <div>${this._currentQIndex + 1}/${this.cards.length}</div>
             <div>${currentCard.q}</div>
