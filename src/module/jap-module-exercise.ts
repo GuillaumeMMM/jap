@@ -11,12 +11,12 @@ export class JapModuleExercise extends LitElement {
   static styles = [resetCSS, sharedCSS];
 
   @property({ type: Object }) module: Module;
+  @property({ type: Array }) cards: ModuleCard[];
 
   @state() _currentQIndex: number = 0;
   @state() _typedValue: string = "";
   @state() _isDone: boolean = false;
   @state() _isWrong: boolean = false;
-  @state() _cards: ModuleCard[] = [];
 
   inputRef: Ref<HTMLInputElement> = createRef();
   nextButtonRef: Ref<HTMLButtonElement> = createRef();
@@ -24,25 +24,12 @@ export class JapModuleExercise extends LitElement {
 
   firstUpdated() {
     this.inputRef.value.focus();
-
-    this._cards = this.shuffleCards(this.module.cards);
-  }
-
-  shuffleCards(cards: ModuleCard[]) {
-    let remainingCards = [...cards];
-    const newCards = [];
-    while (remainingCards.length > 0) {
-      const randIndex = Math.trunc(Math.random() * remainingCards.length);
-      newCards.push(remainingCards[randIndex]);
-      remainingCards.splice(randIndex, 1);
-    }
-    return newCards;
   }
 
   nextQ() {
     this._currentQIndex++;
     this._isWrong = false;
-    this.isLastQ = this._currentQIndex === this._cards.length - 1;
+    this.isLastQ = this._currentQIndex === this.cards.length - 1;
     setTimeout(() => {
       this.inputRef.value.focus();
     });
@@ -62,9 +49,12 @@ export class JapModuleExercise extends LitElement {
 
   onSubmitForm(event) {
     event.preventDefault();
+    if (this._typedValue.trim().length === 0) {
+      return;
+    }
 
     this._isWrong = !this.isCorrectAnswer(
-      this._cards[this._currentQIndex],
+      this.cards[this._currentQIndex],
       this._typedValue
     );
 
@@ -89,15 +79,12 @@ export class JapModuleExercise extends LitElement {
   }
 
   render() {
-    const currentCard =
-      this._cards.length > 0
-        ? this._cards[this._currentQIndex]
-        : this.module.cards[this._currentQIndex];
+    const currentCard = this.cards[this._currentQIndex];
     return html`
       ${this._isDone
         ? html`<jap-module-success .module=${this.module}></jap-module-success>`
         : html`<div><a href="./">Back to exercise</a></div>
-            <div>${this._currentQIndex + 1}/${this._cards.length}</div>
+            <div>${this._currentQIndex + 1}/${this.cards.length}</div>
             <div>${currentCard.q}</div>
             <form @submit=${this.onSubmitForm}>
               <input

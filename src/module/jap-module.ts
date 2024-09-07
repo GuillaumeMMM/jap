@@ -5,16 +5,14 @@ import { Task } from "@lit/task";
 import sharedCSS from "../styles/shared.js";
 import "./jap-module-summary";
 import "./jap-module-exercise";
-import "./jap-module-router";
-import { Module, ModuleCard } from "../types/module";
+import "./jap-module-container";
+import { Module } from "../types/module";
 
 @customElement("jap-module")
 export class JapModule extends LitElement {
   static styles = [resetCSS, sharedCSS];
 
   @property() moduleId?: string;
-
-  @state() _moduleCards: ModuleCard[] = [];
 
   private _modulesTask = new Task(this, {
     task: async ([], { signal }) => {
@@ -31,11 +29,9 @@ export class JapModule extends LitElement {
     return html`${this._modulesTask.render({
       pending: () => html`<p>Loading module...</p>`,
       complete: (data: Module) => {
-        this._moduleCards = [...data.cards];
-        return html`<jap-module-router
+        return html`<jap-module-container
           .module=${data}
-          .cards=${this._moduleCards}
-        ></jap-module-router>`;
+        ></jap-module-container>`;
       },
       error: (e) => html`<p>Error: ${e}</p>`,
     })}`;
