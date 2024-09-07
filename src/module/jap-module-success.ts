@@ -2,7 +2,7 @@ import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
-import { Answers, Module, ModuleCard } from "../types/module";
+import { Answer, Module, ModuleCard } from "../types/module";
 
 @customElement("jap-module-success")
 export class JapModuleSuccess extends LitElement {
@@ -10,16 +10,10 @@ export class JapModuleSuccess extends LitElement {
 
   @property({ type: Object }) module: Module;
   @property({ type: Array }) cards: ModuleCard[];
-  @property({ type: Object }) answersRecap: Answers;
+  @property({ type: Array }) answersRecap: Answer[];
 
   render() {
-    const correctCards = this.module.cards.filter(
-      (card) => this.answersRecap.get(card.q)?.isCorrect
-    );
-
-    const incorrectCards = this.module.cards.filter(
-      (card) => !this.answersRecap.get(card.q)?.isCorrect
-    );
+    const correctCards = this.answersRecap.filter((answer) => answer.isCorrect);
 
     return html`<h1>Exercise finished</h1>
       <div>

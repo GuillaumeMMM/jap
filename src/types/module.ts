@@ -9,4 +9,6 @@ export type Module = {
   cards: ModuleCard[];
 };
 
-export type Answers = Map<string, { isCorrect: boolean }>;
+export type Answer = { q: string; isCorrect: boolean };
+
+export type ExerciseMode = "20" | "100" | "500";

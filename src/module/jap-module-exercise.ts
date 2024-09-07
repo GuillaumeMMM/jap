@@ -2,7 +2,7 @@ import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
-import { Answers, Module, ModuleCard } from "../types/module";
+import { Answer, Module, ModuleCard } from "../types/module";
 import "./jap-module-success";
 import { createRef, Ref, ref } from "lit/directives/ref.js";
 
@@ -21,7 +21,7 @@ export class JapModuleExercise extends LitElement {
   inputRef: Ref<HTMLInputElement> = createRef();
   nextButtonRef: Ref<HTMLButtonElement> = createRef();
   isLastQ: boolean = false;
-  answersRecap: Answers = new Map();
+  answersRecap: Answer[] = [];
 
   firstUpdated() {
     this.inputRef.value.focus();
@@ -59,7 +59,8 @@ export class JapModuleExercise extends LitElement {
       this._typedValue
     );
 
-    this.answersRecap.set(this.cards[this._currentQIndex].q, {
+    this.answersRecap.push({
+      q: this.cards[this._currentQIndex].q,
       isCorrect: !this._isWrong,
     });
 
