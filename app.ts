@@ -6,11 +6,13 @@ import "./src/home/jap-home";
 import "./src/layout/jap-layout";
 import "./src/modules/jap-modules";
 import "./src/module/jap-module";
+import "./src/login/jap-login";
 
 @customElement("jap-app")
 export class App extends LitElement {
   private _routes = new Router(this, [
     { path: "/", render: () => html`<jap-modules></jap-modules>` },
+    { path: "/login", render: () => html`<jap-login></jap-login>` },
     { path: "/modules", render: () => html`<jap-modules></jap-modules>` },
     {
       path: "/module/:id/*",

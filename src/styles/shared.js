@@ -82,6 +82,43 @@ export default css`
     background-color: var(--color-primary-transparent);
   }
 
+  .input-radio {
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: column;
+    border-radius: 2rem;
+    padding: 1rem;
+    min-width: 200px;
+    min-height: 150px;
+    border: 2px solid var(--color-primary);
+    position: relative;
+  }
+
+  .input-radio > input[type="radio"],
+  .input-radio > label {
+    cursor: pointer;
+  }
+
+  .input-radio-icon {
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  .input-radio:has(input[type="radio"]:checked) {
+    background-color: var(--color-primary-transparent);
+  }
+
+  .input-radio:hover,
+  .input-radio:has(input[type="radio"]:checked):hover {
+    background-color: var(--color-primary-transparent-2);
+  }
+
+  .input-radio > input[type="radio"] {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
   td,
   th {
     padding: 0.5rem;
