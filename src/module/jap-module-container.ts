@@ -8,7 +8,7 @@ import { ExerciseMode, Module, ModuleCard } from "../types/module";
 @customElement("jap-module-container")
 export class JapModuleContainer extends LitElement {
   @property({ type: Object }) module: Module;
-  @state() mode: ExerciseMode = "20";
+  @state() mode: ExerciseMode = "all";
 
   private cards: ModuleCard[] | null = null;
 
@@ -33,12 +33,19 @@ export class JapModuleContainer extends LitElement {
 
   buildExerciseCards() {
     this.cards = this.shuffleCards(
-      this.getCardsCount(this.module.cards, Number(this.mode))
+      this.mode === "all"
+        ? [...this.module.cards]
+        : this.getCardsCount(this.module.cards, Number(this.mode))
     );
   }
 
   onModeChanges = (event) => {
     this.mode = event.target.value;
+  };
+
+  onStartExercise = (event) => {
+    event.preventDefault();
+    this._routes.goto("exercise");
   };
 
   private _routes = new Routes(this, [
@@ -49,6 +56,7 @@ export class JapModuleContainer extends LitElement {
           .module=${this.module}
           .onModeChanges=${this.onModeChanges}
           .mode=${this.mode}
+          .onStartExercise=${this.onStartExercise}
         ></jap-module-summary>`,
     },
     {

@@ -1,5 +1,5 @@
 import { html, LitElement } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import { Task } from "@lit/task";
 import sharedCSS from "../styles/shared.js";
@@ -7,6 +7,7 @@ import "./jap-module-summary";
 import "./jap-module-exercise";
 import "./jap-module-container";
 import { Module } from "../types/module";
+import { setDocumentTitle } from "../utils/document";
 
 @customElement("jap-module")
 export class JapModule extends LitElement {
@@ -27,8 +28,9 @@ export class JapModule extends LitElement {
 
   render() {
     return html`${this._modulesTask.render({
-      pending: () => html`<p>Loading module...</p>`,
+      pending: () => html`<p>Loading exercise...</p>`,
       complete: (data: Module) => {
+        setDocumentTitle(`${data.name} Exercise`);
         return html`<jap-module-container
           .module=${data}
         ></jap-module-container>`;

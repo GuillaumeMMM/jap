@@ -1,4 +1,4 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
@@ -8,7 +8,41 @@ import { createRef, Ref, ref } from "lit/directives/ref.js";
 
 @customElement("jap-module-exercise")
 export class JapModuleExercise extends LitElement {
-  static styles = [resetCSS, sharedCSS];
+  static styles = [
+    resetCSS,
+    sharedCSS,
+    css`
+      .question-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .question {
+        font-size: 6rem;
+      }
+
+      .form-row {
+        display: flex;
+        align-items: center;
+      }
+
+      .form-row > input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .form-row > .button {
+        border-left: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      .error {
+        color: var(--color-error);
+        margin-top: 0.5rem;
+      }
+    `,
+  ];
 
   @property({ type: Object }) module: Module;
   @property({ type: Array }) cards: ModuleCard[];
@@ -86,6 +120,7 @@ export class JapModuleExercise extends LitElement {
 
   render() {
     const currentCard = this.cards[this._currentQIndex];
+
     return html`
       ${this._isDone
         ? html`<jap-module-success
@@ -93,37 +128,45 @@ export class JapModuleExercise extends LitElement {
             .cards=${this.cards}
             .answersRecap=${this.answersRecap}
           ></jap-module-success>`
-        : html`<div><a href="./">Back to exercise</a></div>
+        : html`<div><a href="./" class="link">Go back to exercise</a></div>
             <div>${this._currentQIndex + 1}/${this.cards.length}</div>
-            <div>${currentCard.q}</div>
-            <form @submit=${this.onSubmitForm}>
-              <input
-                type="text"
-                .value=${this._typedValue}
-                @input=${this.onInputChange}
-                ${ref(this.inputRef)}
-                .disabled=${this._isWrong}
-              />
-              ${this._isWrong
-                ? html`<p>
-                    Wrong answer. You should have typed
-                    <strong>"${currentCard.a[0]}"</strong>.
-                  </p>`
-                : nothing}
-              ${this._isWrong
-                ? html`<button
-                    type="button"
-                    @click=${this.isLastQ
-                      ? () => {
-                          this._isDone = true;
-                        }
-                      : this.nextQ}
-                    ${ref(this.nextButtonRef)}
-                  >
-                    ${this.isLastQ ? "Finish" : "Next"}
-                  </button>`
-                : html`<button type="submit">Submit</button>`}
-            </form>`}
+            <div class="question-container">
+              <div class="question">${currentCard.q}</div>
+              <form @submit=${this.onSubmitForm}>
+                <div class="form-row">
+                  <input
+                    type="text"
+                    .value=${this._typedValue}
+                    @input=${this.onInputChange}
+                    ${ref(this.inputRef)}
+                    .disabled=${this._isWrong}
+                    autocomplete="off"
+                  />
+                  ${this._isWrong
+                    ? html`<button
+                        type="button"
+                        class="button"
+                        @click=${this.isLastQ
+                          ? () => {
+                              this._isDone = true;
+                            }
+                          : this.nextQ}
+                        ${ref(this.nextButtonRef)}
+                      >
+                        ${this.isLastQ ? "Finish" : "Next"}
+                      </button>`
+                    : html`<button type="submit" class="button">
+                        Submit
+                      </button>`}
+                </div>
+                ${this._isWrong
+                  ? html`<p role="alert" class="error">
+                      Wrong answer. You should have typed
+                      <strong>"${currentCard.a[0]}"</strong>.
+                    </p>`
+                  : nothing}
+              </form>
+            </div> `}
     `;
   }
 }

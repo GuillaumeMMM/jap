@@ -1,3 +1,16 @@
 :root {
-  --background: rgb(234, 232, 232);
+  --background: linear-gradient(
+    340deg,
+    rgb(223, 223, 223) 10%,
+    rgb(251, 244, 224) 100%
+  );
+  --color-primary: #04675d;
+  --color-primary-light: #048275;
+  --color-primary-transparent: #bcecce3b;
+  --color-primary-transparent-2: #bcecce7a;
+  --color-secondary: #534534;
+  --color-secondary-light: #806b53;
+  --color-secondary-transparent: #b1a4953b;
+  --color-secondary-transparent-2: #b1a4957a;
+  --color-error: rgb(164, 48, 48);
 }
