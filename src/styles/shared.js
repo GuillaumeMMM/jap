@@ -38,12 +38,12 @@ export default css`
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding: 0.375rem 0.75rem;
+    padding: 0.375rem 1rem;
     line-height: 1.5rem;
     background-color: var(--color-primary-transparent-2);
     color: black;
     text-decoration: none;
-    border-radius: 0.25rem;
+    border-radius: 1.5rem;
     border: 2px solid var(--color-primary);
   }
 
@@ -80,6 +80,17 @@ export default css`
     padding: 0.375rem 0.75rem;
     line-height: 1.5rem;
     background-color: var(--color-primary-transparent);
+  }
+
+  td,
+  th {
+    padding: 0.5rem;
+    border: 1px solid var(--color-secondary);
+  }
+
+  th,
+  :nth-child(even) > td {
+    background-color: var(--color-secondary-transparent);
   }
 
   .visually-hidden {

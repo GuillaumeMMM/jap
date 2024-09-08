@@ -95,6 +95,7 @@ export class JapModuleExercise extends LitElement {
 
     this.answersRecap.push({
       q: this.cards[this._currentQIndex].q,
+      a: this.cards[this._currentQIndex].a,
       isCorrect: !this._isWrong,
     });
 

@@ -28,6 +28,10 @@ export class JapModuleSummary extends LitElement {
         display: inline-block;
         margin-top: 16px;
       }
+
+      p {
+        margin: 1rem 0 0.5rem 0;
+      }
     `,
   ];
 
@@ -70,8 +74,26 @@ export class JapModuleSummary extends LitElement {
       </form>
       <div>
         <a class="button" href="./exercise"
-          ><span aria-hidden="true">👉&nbsp;</span>Start Exercise</a
+          >Start the exercise<span aria-hidden="true">&nbsp;📚</span></a
         >
-      </div>`;
+      </div>
+      <p>List of questions in this exercise :</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${this.module.cards.map(
+            (card) =>
+              html`<tr>
+                <td>${card.q}</td>
+                <td>${card.a.join(" | ")}</td>
+              </tr>`
+          )}
+        </tbody>
+      </table>`;
   }
 }

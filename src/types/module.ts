@@ -10,6 +10,6 @@ export type Module = {
   tags: string[];
 };
 
-export type Answer = { q: string; isCorrect: boolean };
+export type Answer = { q: string; a: string[]; isCorrect: boolean };
 
 export type ExerciseMode = "20" | "100" | "500" | "all";
