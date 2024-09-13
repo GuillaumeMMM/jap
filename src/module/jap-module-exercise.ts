@@ -65,17 +65,7 @@ export class JapModuleExercise extends LitElement {
     this._currentQIndex++;
     this._isWrong = false;
     this.isLastQ = this._currentQIndex === this.cards.length - 1;
-    setTimeout(() => {
-      this.inputRef.value.focus();
-    });
-  }
-
-  getActionButton() {
-    if (this.isLastQ) {
-      return nothing;
-    } else {
-      return html`<button type="button" @click=${this.nextQ}>Next</button>`;
-    }
+    this.inputRef.value.focus();
   }
 
   onInputChange(event) {
@@ -84,8 +74,12 @@ export class JapModuleExercise extends LitElement {
 
   onSubmitForm(event) {
     event.preventDefault();
-    if (this._typedValue.trim().length === 0) {
+    if (this._typedValue.trim().length === 0 || this._isWrong) {
       return;
+    }
+
+    if (this.isLastQ) {
+      this._isDone = true;
     }
 
     this._isWrong = !this.isCorrectAnswer(
@@ -105,9 +99,7 @@ export class JapModuleExercise extends LitElement {
     }
 
     if (this._isWrong) {
-      setTimeout(() => {
-        this.nextButtonRef.value.focus();
-      });
+      this.nextButtonRef.value.focus();
     } else {
       this.nextQ();
     }
@@ -140,25 +132,29 @@ export class JapModuleExercise extends LitElement {
                     .value=${this._typedValue}
                     @input=${this.onInputChange}
                     ${ref(this.inputRef)}
-                    .disabled=${this._isWrong}
+                    spellcheck="false"
                     autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
                   />
-                  ${this._isWrong
-                    ? html`<button
-                        type="button"
-                        class="button"
-                        @click=${this.isLastQ
-                          ? () => {
-                              this._isDone = true;
-                            }
-                          : this.nextQ}
-                        ${ref(this.nextButtonRef)}
-                      >
-                        ${this.isLastQ ? "Finish" : "Next"}
-                      </button>`
-                    : html`<button type="submit" class="button">
-                        Submit
-                      </button>`}
+                  <button
+                    class="button"
+                    type=${this._isWrong ? "button" : "submit"}
+                    ${ref(this.nextButtonRef)}
+                    @click=${this._isWrong
+                      ? this.isLastQ
+                        ? () => {
+                            this._isDone = true;
+                          }
+                        : this.nextQ
+                      : () => {}}
+                  >
+                    ${this._isWrong
+                      ? this.isLastQ
+                        ? "Finish"
+                        : "Next"
+                      : "Submit"}
+                  </button>
                 </div>
                 ${this._isWrong
                   ? html`<p role="alert" class="error">
