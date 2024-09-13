@@ -108,7 +108,9 @@ export class JapModuleExercise extends LitElement {
   }
 
   isCorrectAnswer(card: ModuleCard, a: string) {
-    return card.a.includes(a);
+    return card.a
+      .map((answer) => answer.toLowerCase())
+      .includes(a.toLowerCase());
   }
 
   render() {
