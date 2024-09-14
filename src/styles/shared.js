@@ -45,6 +45,7 @@ export default css`
     text-decoration: none;
     border-radius: 1.5rem;
     border: 2px solid var(--color-primary);
+    font-size: 1rem;
   }
 
   .button:hover {
@@ -73,7 +74,8 @@ export default css`
     background-color: var(--color-primary-transparent-2);
   }
 
-  input[type="text"] {
+  input[type="text"],
+  input[type="password"] {
     border: 2px solid var(--color-primary);
     border-radius: 0.25rem;
     font-size: 16px;

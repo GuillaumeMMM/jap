@@ -7,12 +7,14 @@ import "./src/home/jap-home";
 import "./src/layout/jap-layout";
 import "./src/modules/jap-modules";
 import "./src/module/jap-module";
+import "./src/profile/jap-profile";
 
 @customElement("jap-app")
 export class App extends LitElement {
   private _routes = new Router(this, [
     { path: "/", render: () => html`<jap-modules></jap-modules>` },
     { path: "/modules", render: () => html`<jap-modules></jap-modules>` },
+    { path: "/profile", render: () => html`<jap-profile></jap-profile>` },
     {
       path: "/module/:id/*",
       render: (params) => {
