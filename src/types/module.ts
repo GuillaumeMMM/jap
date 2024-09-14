@@ -3,11 +3,16 @@ export type ModuleCard = {
   a: string[];
 };
 
+export type ModuleTag = {
+  label: string;
+  emoji?: string;
+};
+
 export type Module = {
   id: string;
   name: string;
   cards: ModuleCard[];
-  tags: string[];
+  tags: ModuleTag[];
 };
 
 export type Answer = { q: string; a: string[]; isCorrect: boolean };

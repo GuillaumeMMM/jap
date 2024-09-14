@@ -4,6 +4,7 @@ import { Task } from "@lit/task";
 import resetCSS from "../styles/reset.js";
 import sharedCSS from "../styles/shared.js";
 import { setDocumentTitle } from "../utils/document.js";
+import { Module } from "../types/module.js";
 
 @customElement("jap-modules")
 export class JapModules extends LitElement {
@@ -132,7 +133,7 @@ export class JapModules extends LitElement {
       <h1>Exercises</h1>
       ${this._modulesTask.render({
         pending: () => html`<p>Loading exercises...</p>`,
-        complete: (data) => html`
+        complete: (data: { modules: Module[] }) => html`
           <ul class="modules">
             ${data.modules.reverse().map(
               (module) =>
@@ -142,9 +143,10 @@ export class JapModules extends LitElement {
                       ${module.tags.map(
                         (t) =>
                           html`<span class="badge"
-                            >${t === "Japanese"
-                              ? html`<span aria-hidden="true">🇯🇵&nbsp;</span>`
-                              : ""}${t}</span
+                            >${t.emoji &&
+                            html`<span aria-hidden="true"
+                              >${t.emoji}&nbsp;</span
+                            >`}${t.label}</span
                           >`
                       )}
                     </div>
