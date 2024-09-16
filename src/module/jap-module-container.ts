@@ -17,8 +17,16 @@ export class JapModuleContainer extends LitElement {
     const newCards = [];
     while (remainingCards.length > 0) {
       const randIndex = Math.trunc(Math.random() * remainingCards.length);
-      newCards.push(remainingCards[randIndex]);
-      remainingCards.splice(randIndex, 1);
+      const randomCard = remainingCards[randIndex];
+      if (
+        newCards.length === 0 ||
+        cards.length <= 1 ||
+        randomCard !== newCards[randIndex - 1]
+      ) {
+        //  Only add a card if it's different from the previous card picked
+        newCards.push(randomCard);
+        remainingCards.splice(randIndex, 1);
+      }
     }
     return newCards;
   }
