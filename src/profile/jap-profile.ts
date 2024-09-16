@@ -16,14 +16,20 @@ export class JapProfile extends LitElement {
     localStorage.setItem("profile", JSON.stringify({ username, token }));
   };
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   render() {
     setDocumentTitle(`Profile`);
 
     return html` ${this.isLoggedIn
-      ? html`<h1>Profile</h1>
-          <div>
-            logged in as ${JSON.parse(localStorage.getItem("profile")).username}
-          </div>`
+      ? html`<h1>
+          Welcome
+          ${this.capitalizeFirstLetter(
+            JSON.parse(localStorage.getItem("profile")).username
+          )} <span aria-hidden="true">👋</span>
+        </h1>`
       : html`<jap-profile-login
           .onLogin=${this.onLogin}
         ></jap-profile-login>`}`;
