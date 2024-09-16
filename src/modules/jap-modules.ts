@@ -150,7 +150,9 @@ export class JapModules extends LitElement {
                           >`
                       )}
                     </div>
-                    <div class="decoration">${module.cards[0].q}</div>
+                    <div class="decoration" aria-hidden="true">
+                      ${module.cards[0].q}
+                    </div>
                     <div class="title-container">
                       <h2 class="module-title">${module.name}</h2>
                       <div class="arrow" aria-hidden="true">

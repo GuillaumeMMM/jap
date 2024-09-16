@@ -61,9 +61,9 @@ export class JapModuleSuccess extends LitElement {
                 <td>${answer[1].a.join(" | ")}</td>
                 <td>
                   <span class="visually-hidden"
-                    >${answer[1].isCorrect.filter((c) => c)} correct answers and
-                    ${answer[1].isCorrect.filter((c) => !c)} incorrect
-                    answers</span
+                    >${answer[1].isCorrect.filter((c) => c).length} correct
+                    answers and ${answer[1].isCorrect.filter((c) => !c).length}
+                    incorrect answers</span
                   >
                   <span aria-hidden="true">
                     ${answer[1].isCorrect

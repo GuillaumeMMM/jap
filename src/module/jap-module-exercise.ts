@@ -124,7 +124,9 @@ export class JapModuleExercise extends LitElement {
             .answersRecap=${this.answersRecap}
           ></jap-module-success>`
         : html`<div><a href="./" class="link">Go back to exercise</a></div>
-            <div>${this._currentQIndex + 1}/${this.cards.length}</div>
+            <div role="status">
+              ${this._currentQIndex + 1}/${this.cards.length}
+            </div>
             <div class="question-container">
               <div class="question">${currentCard.q}</div>
               <form @submit=${this.onSubmitForm}>
@@ -140,6 +142,9 @@ export class JapModuleExercise extends LitElement {
                     autocapitalize="off"
                     aria-hidden=${this._isWrong ? "true" : undefined}
                     class=${this._isWrong ? "visually-hidden" : ""}
+                    aria-label=${`Question : ${
+                      this.cards[this._currentQIndex].q
+                    }`}
                   />
                   <button
                     class=${`button ${
@@ -162,12 +167,14 @@ export class JapModuleExercise extends LitElement {
                       : "Submit"}
                   </button>
                 </div>
-                ${this._isWrong
-                  ? html`<p role="alert" class="error">
-                      Wrong answer. You should have typed
-                      <strong>"${currentCard.a[0]}"</strong>.
-                    </p>`
-                  : nothing}
+                <div role="alert">
+                  ${this._isWrong
+                    ? html`<p class="error">
+                        Wrong answer. You should have typed
+                        <span class="emphasis">"${currentCard.a[0]}"</span>.
+                      </p>`
+                    : nothing}
+                </div>
               </form>
             </div> `}
     `;

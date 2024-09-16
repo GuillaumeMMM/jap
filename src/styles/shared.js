@@ -95,6 +95,10 @@ export default css`
     background-color: var(--color-secondary-transparent);
   }
 
+  .emphasis {
+    font-weight: 700;
+  }
+
   .visually-hidden {
     position: absolute !important;
     width: 1px !important;
