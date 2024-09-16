@@ -31,7 +31,7 @@ export class JapModuleExercise extends LitElement {
         border-bottom-right-radius: 0;
       }
 
-      .form-row > .button {
+      .form-row > .button:not(.full-button) {
         border-left: none;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -138,9 +138,13 @@ export class JapModuleExercise extends LitElement {
                     autocomplete="off"
                     autocorrect="off"
                     autocapitalize="off"
+                    aria-hidden=${this._isWrong ? "true" : undefined}
+                    class=${this._isWrong ? "visually-hidden" : ""}
                   />
                   <button
-                    class="button"
+                    class=${`button ${
+                      this._isWrong ? "full-button" : undefined
+                    }`}
                     type=${this._isWrong ? "button" : "submit"}
                     ${ref(this.nextButtonRef)}
                     @click=${this._isWrong
