@@ -68,6 +68,7 @@ export default css`
     -moz-appearance: none;
     appearance: none;
     font-size: 1rem;
+    color: black;
   }
 
   select:hover {

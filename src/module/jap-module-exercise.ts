@@ -134,6 +134,7 @@ export class JapModuleExercise extends LitElement {
                   <input
                     type="text"
                     .value=${this._typedValue}
+                    .tabIndex=${this._isWrong ? -1 : undefined}
                     @input=${this.onInputChange}
                     ${ref(this.inputRef)}
                     spellcheck="false"
