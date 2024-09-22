@@ -14,7 +14,8 @@ export class JapModules extends LitElement {
     css`
       .modules {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
+        max-width: 1200px;
         gap: 1rem;
         margin: 1rem 0;
       }

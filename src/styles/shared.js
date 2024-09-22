@@ -40,8 +40,8 @@ export default css`
     align-items: center;
     padding: 0.375rem 1rem;
     line-height: 1.5rem;
-    background-color: var(--color-primary-transparent-2);
-    color: black;
+    background-color: var(--color-primary-light);
+    color: white;
     text-decoration: none;
     border-radius: 1.5rem;
     border: 2px solid var(--color-primary);
@@ -49,7 +49,7 @@ export default css`
   }
 
   .button:hover {
-    background-color: var(--color-primary-transparent);
+    background-color: var(--color-primary);
   }
 
   select {

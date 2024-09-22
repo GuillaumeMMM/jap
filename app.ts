@@ -8,9 +8,19 @@ import "./src/layout/jap-layout";
 import "./src/modules/jap-modules";
 import "./src/module/jap-module";
 import "./src/profile/jap-profile";
+import { provide } from "@lit/context";
+import { UserContext, userContext } from "./src/contexts/userContext";
+import { User } from "./src/types/user";
 
 @customElement("jap-app")
 export class App extends LitElement {
+  @provide({ context: userContext })
+  public userContext: UserContext = {
+    user: null,
+    setUser: function (user) {
+      this.user = user;
+    },
+  };
   private _routes = new Router(this, [
     { path: "/", render: () => html`<jap-modules></jap-modules>` },
     { path: "/modules", render: () => html`<jap-modules></jap-modules>` },
