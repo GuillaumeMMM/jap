@@ -1,4 +1,4 @@
-import { html, LitElement, css } from "lit";
+import { html, LitElement, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
@@ -19,6 +19,26 @@ export class JapModuleSuccess extends LitElement {
   @property({ type: Object }) module: Module;
   @property({ type: Array }) cards: ModuleCard[];
   @property({ type: Array }) answersRecap: Answer[];
+
+  firstUpdated(): void {
+    console.log("firstUpdated");
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if (!token) {
+      return;
+    }
+    void fetch(`https://guillaume-postjapuserexercise.web.val.run`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        token,
+        exerciseId: this.module.id,
+        answers: this.answersRecap,
+      }),
+    });
+  }
 
   render() {
     const correctCards = this.answersRecap.filter((answer) => answer.isCorrect);
