@@ -21,9 +21,7 @@ export class JapModuleSuccess extends LitElement {
   @property({ type: Array }) answersRecap: Answer[];
 
   firstUpdated(): void {
-    console.log("firstUpdated");
     const token = localStorage.getItem("token");
-    console.log(token);
     if (!token) {
       return;
     }

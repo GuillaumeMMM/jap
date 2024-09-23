@@ -136,7 +136,7 @@ export class JapModules extends LitElement {
         pending: () => html`<p>Loading exercises...</p>`,
         complete: (data: { modules: Module[] }) => html`
           <ul class="modules">
-            ${data.modules.reverse().map(
+            ${data.modules.map(
               (module) =>
                 html`<li>
                   <a href="/module/${module.id}/" class="module">
