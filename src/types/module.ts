@@ -12,9 +12,12 @@ export type Module = {
   id: string;
   name: string;
   cards: ModuleCard[];
+  sign: string;
   tags: ModuleTag[];
 };
 
+export type Modules = Omit<Module, "cards">[];
+
 export type Answer = { q: string; a: string[]; isCorrect: boolean };
 
-export type ExerciseMode = "20" | "100" | "500" | "all";
+export type ExerciseMode = "20" | "100" | "200" | "500" | "all";

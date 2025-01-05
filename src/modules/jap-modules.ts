@@ -4,7 +4,7 @@ import { Task } from "@lit/task";
 import resetCSS from "../styles/reset.js";
 import sharedCSS from "../styles/shared.js";
 import { setDocumentTitle } from "../utils/document.js";
-import { Module } from "../types/module.js";
+import { Module, Modules } from "../types/module.js";
 
 @customElement("jap-modules")
 export class JapModules extends LitElement {
@@ -134,7 +134,7 @@ export class JapModules extends LitElement {
       <h1>Exercises</h1>
       ${this._modulesTask.render({
         pending: () => html`<p>Loading exercises...</p>`,
-        complete: (data: { modules: Module[] }) => html`
+        complete: (data: { modules: Modules }) => html`
           <ul class="modules">
             ${data.modules.map(
               (module) =>
@@ -152,7 +152,7 @@ export class JapModules extends LitElement {
                       )}
                     </div>
                     <div class="decoration" aria-hidden="true">
-                      ${module.cards[0].q}
+                      ${module.sign}
                     </div>
                     <div class="title-container">
                       <h2 class="module-title">${module.name}</h2>
