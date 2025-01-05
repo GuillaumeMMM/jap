@@ -1,6 +1,7 @@
 export type ModuleCard = {
   q: string;
   a: string[];
+  indication?: string;
 };
 
 export type ModuleTag = {

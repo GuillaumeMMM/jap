@@ -41,6 +41,10 @@ export class JapModuleExercise extends LitElement {
         color: var(--color-error);
         margin-top: 0.5rem;
       }
+
+      .indication {
+        color: var(--color-info);
+      }
     `,
   ];
 
@@ -171,9 +175,13 @@ export class JapModuleExercise extends LitElement {
                 <div role="alert">
                   ${this._isWrong
                     ? html`<p class="error">
-                        Wrong answer. You should have typed
-                        <span class="emphasis">"${currentCard.a[0]}"</span>.
-                      </p>`
+                          Wrong answer. You should have typed
+                          <span class="emphasis">"${currentCard.a[0]}"</span>.
+                        </p>
+                        ${currentCard.indication &&
+                        html`<p class="indication">
+                          Indication : ${currentCard.indication}
+                        </p>`}`
                     : nothing}
                 </div>
               </form>
