@@ -18,7 +18,7 @@ export class JapModuleExercise extends LitElement {
       }
 
       .question {
-        font-size: 6rem;
+        font-size: 3rem;
       }
 
       .form-row {
@@ -44,6 +44,18 @@ export class JapModuleExercise extends LitElement {
 
       .indication {
         color: var(--color-info);
+      }
+
+      @media screen and (min-width: 40rem) {
+        .question {
+          font-size: 5rem;
+        }
+      }
+
+      @media screen and (min-width: 60rem) {
+        .question {
+          font-size: 6rem;
+        }
       }
     `,
   ];
