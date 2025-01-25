@@ -54,7 +54,11 @@ export class JapProfile extends LitElement {
               <span aria-hidden="true">👋</span>
             </h1>
             <a class="link" href="../">Back</a>`,
-          error: (e) => html`<p>Error: ${e}</p>`,
+          error: (e) => {
+            localStorage.removeItem("token");
+            window.location.reload();
+            return html`<p>Error: ${e}</p>`;
+          },
         })
       : html`<jap-profile-login
           .onLogin=${this.onLogin}
