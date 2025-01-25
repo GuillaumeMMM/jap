@@ -76,6 +76,7 @@ export default css`
   }
 
   input[type="text"],
+  input[type="search"],
   input[type="password"] {
     border: 2px solid var(--color-primary);
     border-radius: 0.25rem;

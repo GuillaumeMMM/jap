@@ -1,10 +1,11 @@
 import { LitElement, html, css } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
 import { Task } from "@lit/task";
 import resetCSS from "../styles/reset.js";
 import sharedCSS from "../styles/shared.js";
 import { setDocumentTitle } from "../utils/document.js";
-import { Module, Modules, ModulesMetadata } from "../types/module.js";
+import { Modules, ModulesMetadata } from "../types/module.js";
+import { createRef, Ref, ref } from "lit/directives/ref.js";
 
 @customElement("jap-modules")
 export class JapModules extends LitElement {
@@ -114,8 +115,26 @@ export class JapModules extends LitElement {
         display: flex;
         align-items: center;
       }
+
+      .search-container {
+        margin: 1rem 0;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      .search-container > input {
+        width: 400px;
+        max-width: 50%;
+      }
     `,
   ];
+
+  @state() _searchedValue: string = "";
+
+  inputRef: Ref<HTMLInputElement> = createRef();
 
   private _modulesTask = new Task(this, {
     task: async ([], { signal }) => {
@@ -127,6 +146,16 @@ export class JapModules extends LitElement {
     },
     args: () => [],
   });
+
+  private onSearchModule = (e: Event) => {
+    this._searchedValue = (e.target as HTMLInputElement).value;
+  };
+
+  private onResetSearch = () => {
+    this._searchedValue = "";
+    this.inputRef.value.value = "";
+  };
+
   render() {
     setDocumentTitle(`Exercises`);
 
@@ -134,49 +163,77 @@ export class JapModules extends LitElement {
       <h1>Exercises</h1>
       ${this._modulesTask.render({
         pending: () => html`<p>Loading exercises...</p>`,
-        complete: (data: { modules: Modules; meta: ModulesMetadata }) => html`
-          <ul class="modules">
-            ${data.modules.map(
-              (module) =>
-                html`<li>
-                  <a href="/module/${module.id}/" class="module">
-                    <div class="badges">
-                      ${data.meta.types
-                        .find((t) => t.id === module.type)
-                        .tags.map(
-                          (t) =>
-                            html`<span class="badge"
-                              >${t.emoji &&
-                              html`<span aria-hidden="true"
-                                >${t.emoji}&nbsp;</span
-                              >`}${t.label}</span
-                            >`
-                        )}
-                    </div>
-                    <div class="decoration" aria-hidden="true">
-                      ${module.sign}
-                    </div>
-                    <div class="title-container">
-                      <h2 class="module-title">${module.name}</h2>
-                      <div class="arrow" aria-hidden="true">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                        >
-                          <polygon
-                            fill="currentColor"
-                            points="11.293 4.707 17.586 11 4 11 4 13 17.586 13 11.293 19.293 12.707 20.707 21.414 12 12.707 3.293 11.293 4.707"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </a>
-                </li>`
-            )}
-          </ul>
-        `,
+        complete: (data: { modules: Modules; meta: ModulesMetadata }) => {
+          const searchedModules = data.modules.filter((m) =>
+            m.name.toLowerCase().includes(this._searchedValue)
+          );
+          return html`
+            <div>
+              <div class="search-container">
+                <label for="search-input">Search for an exercise</label>
+                <input
+                  id="search-input"
+                  type="search"
+                  placeholder="Search"
+                  @input=${this.onSearchModule}
+                  ${ref(this.inputRef)}
+                  autocomplete="off"
+                  autocorrect="off"
+                />
+              </div>
+              ${searchedModules.length > 0
+                ? html`<ul class="modules">
+                    ${searchedModules.map(
+                      (module) =>
+                        html`<li>
+                          <a href="/module/${module.id}/" class="module">
+                            <div class="badges">
+                              ${data.meta.types
+                                .find((t) => t.id === module.type)
+                                .tags.map(
+                                  (t) =>
+                                    html`<span class="badge"
+                                      >${t.emoji &&
+                                      html`<span aria-hidden="true"
+                                        >${t.emoji}&nbsp;</span
+                                      >`}${t.label}</span
+                                    >`
+                                )}
+                            </div>
+                            <div class="decoration" aria-hidden="true">
+                              ${module.sign}
+                            </div>
+                            <div class="title-container">
+                              <h2 class="module-title">${module.name}</h2>
+                              <div class="arrow" aria-hidden="true">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <polygon
+                                    fill="currentColor"
+                                    points="11.293 4.707 17.586 11 4 11 4 13 17.586 13 11.293 19.293 12.707 20.707 21.414 12 12.707 3.293 11.293 4.707"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </a>
+                        </li>`
+                    )}
+                  </ul>`
+                : html`<p>No exercise was found for your search.</p>
+                    <button
+                      type="button"
+                      class="button"
+                      @click="${this.onResetSearch}"
+                    >
+                      Reset the search
+                    </button>`}
+            </div>
+          `;
+        },
         error: (e) => html`<p>Error: ${e}</p>`,
       })}
     `;
