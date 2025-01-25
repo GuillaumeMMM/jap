@@ -125,9 +125,28 @@ export class JapModules extends LitElement {
         margin-bottom: 0.25rem;
       }
 
-      .search-container > input {
+      .search-container > .search-input {
         width: 400px;
         max-width: 50%;
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-container > .search-input input {
+        padding-left: 2rem;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 10px;
+        transform: scale(1.2);
+        filter: grayscale(1);
+      }
+
+      .no-result {
+        margin: 1rem 0 0.5rem 0;
+        color: var(--color-text-muted);
       }
     `,
   ];
@@ -171,15 +190,18 @@ export class JapModules extends LitElement {
             <div>
               <div class="search-container">
                 <label for="search-input">Search for an exercise</label>
-                <input
-                  id="search-input"
-                  type="search"
-                  placeholder="Search"
-                  @input=${this.onSearchModule}
-                  ${ref(this.inputRef)}
-                  autocomplete="off"
-                  autocorrect="off"
-                />
+                <div class="search-input">
+                  <span aria-hidden="true" class="search-icon">🔎</span>
+                  <input
+                    id="search-input"
+                    type="search"
+                    placeholder="Search"
+                    @input=${this.onSearchModule}
+                    ${ref(this.inputRef)}
+                    autocomplete="off"
+                    autocorrect="off"
+                  />
+                </div>
               </div>
               ${searchedModules.length > 0
                 ? html`<ul class="modules">
@@ -223,7 +245,9 @@ export class JapModules extends LitElement {
                         </li>`
                     )}
                   </ul>`
-                : html`<p>No exercise was found for your search.</p>
+                : html`<p class="no-result">
+                      No exercise was found for your search.
+                    </p>
                     <button
                       type="button"
                       class="button"
