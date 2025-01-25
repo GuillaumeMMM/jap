@@ -5,7 +5,7 @@ export type ModuleCard = {
 };
 
 export type ModuleTag = {
-  label: string;
+  label?: string;
   emoji?: string;
 };
 
@@ -14,6 +14,17 @@ export type Module = {
   name: string;
   cards: ModuleCard[];
   sign: string;
+  type: string;
+};
+
+export type ModulesMetadata = {
+  types: ModuleType[];
+};
+
+export type ModuleType = {
+  name: string;
+  id: string;
+  description: string;
   tags: ModuleTag[];
 };
 

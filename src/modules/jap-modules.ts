@@ -4,7 +4,7 @@ import { Task } from "@lit/task";
 import resetCSS from "../styles/reset.js";
 import sharedCSS from "../styles/shared.js";
 import { setDocumentTitle } from "../utils/document.js";
-import { Module, Modules } from "../types/module.js";
+import { Module, Modules, ModulesMetadata } from "../types/module.js";
 
 @customElement("jap-modules")
 export class JapModules extends LitElement {
@@ -134,22 +134,24 @@ export class JapModules extends LitElement {
       <h1>Exercises</h1>
       ${this._modulesTask.render({
         pending: () => html`<p>Loading exercises...</p>`,
-        complete: (data: { modules: Modules }) => html`
+        complete: (data: { modules: Modules; meta: ModulesMetadata }) => html`
           <ul class="modules">
             ${data.modules.map(
               (module) =>
                 html`<li>
                   <a href="/module/${module.id}/" class="module">
                     <div class="badges">
-                      ${module.tags.map(
-                        (t) =>
-                          html`<span class="badge"
-                            >${t.emoji &&
-                            html`<span aria-hidden="true"
-                              >${t.emoji}&nbsp;</span
-                            >`}${t.label}</span
-                          >`
-                      )}
+                      ${data.meta.types
+                        .find((t) => t.id === module.type)
+                        .tags.map(
+                          (t) =>
+                            html`<span class="badge"
+                              >${t.emoji &&
+                              html`<span aria-hidden="true"
+                                >${t.emoji}&nbsp;</span
+                              >`}${t.label}</span
+                            >`
+                        )}
                     </div>
                     <div class="decoration" aria-hidden="true">
                       ${module.sign}
