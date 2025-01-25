@@ -2,7 +2,7 @@ import { html, LitElement, nothing, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
-import { Answer, Module, ModuleCard } from "../types/module";
+import { Answer, Module, ModuleCard, ModuleType } from "../types/module";
 import "./jap-module-success";
 import { createRef, Ref, ref } from "lit/directives/ref.js";
 
@@ -44,6 +44,10 @@ export class JapModuleExercise extends LitElement {
 
       .indication {
         color: var(--color-info);
+      }
+
+      .type-description {
+        margin: 0.5rem 0;
       }
 
       @media screen and (min-width: 40rem) {
@@ -142,6 +146,10 @@ export class JapModuleExercise extends LitElement {
         : html`<div><a href="./" class="link">Go back to exercise</a></div>
             <div role="status">
               ${this._currentQIndex + 1}/${this.cards.length}
+            </div>
+            <div class="type-description">
+              ${this.module.meta.types.find((t) => t.id === this.module.type)
+                ?.description}
             </div>
             <div class="question-container">
               <div class="question">${currentCard.q}</div>

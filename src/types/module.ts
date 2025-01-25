@@ -15,6 +15,7 @@ export type Module = {
   cards: ModuleCard[];
   sign: string;
   type: string;
+  meta: ModulesMetadata;
 };
 
 export type ModulesMetadata = {
