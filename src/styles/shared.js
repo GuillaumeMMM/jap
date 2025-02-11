@@ -1,20 +1,11 @@
 import { css } from "lit";
 
 export default css`
+  @import "node_modules/@guillaumemmm/marquedefabrique/variables.css";
+  @import "node_modules/@guillaumemmm/marquedefabrique/kit.css";
+
   * {
     box-sizing: border-box;
-  }
-
-  h1,
-  h2 {
-    font-weight: 600;
-  }
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
   }
 
   .link {

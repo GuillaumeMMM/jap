@@ -4,7 +4,7 @@ import { copy } from "esbuild-plugin-copy";
 
 await build({
   bundle: true,
-  entryPoints: ["app.ts"],
+  entryPoints: ["app.ts", "src/styles/global.css"],
   outdir: "build",
   minify: true,
   plugins: [
