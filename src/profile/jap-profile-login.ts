@@ -1,13 +1,11 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import resetCSS from "../styles/reset.js";
 import sharedCSS from "../styles/shared.js";
 
 @customElement("jap-profile-login")
 export class JapProfileLogin extends LitElement {
   static styles = [
-    resetCSS,
-    sharedCSS,
+    ...sharedCSS,
     css`
       .form {
         margin: 1rem 0;
@@ -25,7 +23,7 @@ export class JapProfileLogin extends LitElement {
       }
 
       .error-message {
-        color: var(--color-error);
+        color: var(--mdf-color-error);
       }
     `,
   ];
@@ -77,7 +75,7 @@ export class JapProfileLogin extends LitElement {
         <div class="form-row">
           <label for="username">Username</label>
           <input
-            class="form-input"
+            class="form-input mdf-input"
             type="text"
             id="username"
             .value=${this.usernameValue}
@@ -88,7 +86,7 @@ export class JapProfileLogin extends LitElement {
         <div class="form-row">
           <label for="password">Password</label>
           <input
-            class="form-input"
+            class="form-input mdf-input"
             type="password"
             id="password"
             .value=${this.passwordValue}
@@ -96,7 +94,7 @@ export class JapProfileLogin extends LitElement {
             required
           />
         </div>
-        <button class="button form-button" type="submit">
+        <button class="mdf-button form-button" type="submit">
           Login <span aria-hidden="true">&nbsp;🔑</span>
         </button>
         <div role="alert" class="error-message">

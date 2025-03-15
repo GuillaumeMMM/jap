@@ -1,7 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { Task } from "@lit/task";
-import resetCSS from "../styles/reset.js";
 import sharedCSS from "../styles/shared.js";
 import { setDocumentTitle } from "../utils/document.js";
 import { Modules, ModulesMetadata } from "../types/module.js";
@@ -10,8 +9,7 @@ import { createRef, Ref, ref } from "lit/directives/ref.js";
 @customElement("jap-modules")
 export class JapModules extends LitElement {
   static styles = [
-    resetCSS,
-    sharedCSS,
+    ...sharedCSS,
     css`
       .modules {
         display: flex;
@@ -25,11 +23,11 @@ export class JapModules extends LitElement {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        background: var(--color-primary-light);
+        background: var(--mdf-color-primary-light);
         background: linear-gradient(
           28deg,
-          var(--color-primary) 10%,
-          var(--color-primary-light) 100%
+          var(--mdf-color-primary) 10%,
+          var(--mdf-color-primary-light) 100%
         );
         padding: 1rem;
         border-radius: 1.5rem;
@@ -44,20 +42,20 @@ export class JapModules extends LitElement {
       }
 
       li:nth-child(even) > .module {
-        background: var(--color-secondary-light);
+        background: var(--mdf-color-secondary-light);
         background: linear-gradient(
           28deg,
-          var(--color-secondary) 10%,
-          var(--color-secondary-light) 100%
+          var(--mdf-color-secondary) 10%,
+          var(--mdf-color-secondary-light) 100%
         );
       }
 
       li:nth-child(even) .badge {
-        background-color: var(--color-secondary-transparent);
+        background-color: var(--mdf-color-secondary-transparent);
       }
 
       li:nth-child(even) .decoration {
-        color: var(--color-secondary-transparent);
+        color: var(--mdf-color-secondary-transparent);
       }
 
       h2 {
@@ -70,7 +68,7 @@ export class JapModules extends LitElement {
       }
 
       .module:hover {
-        background: var(--color-primary);
+        background: var(--mdf-color-primary);
         padding: 1rem 1.3rem;
       }
 
@@ -89,7 +87,7 @@ export class JapModules extends LitElement {
       }
 
       .badge {
-        background-color: var(--color-primary-transparent);
+        background-color: var(--mdf-color-primary-transparent);
         padding: 2px 5px;
         border-radius: 3px;
         font-size: 0.75rem;
@@ -99,7 +97,7 @@ export class JapModules extends LitElement {
         position: absolute;
         top: 10px;
         right: 10px;
-        color: var(--color-primary-transparent);
+        color: var(--mdf-color-primary-transparent);
         font-size: 4rem;
         line-height: 1;
         transition: top ease-out 0.1s;
@@ -146,7 +144,7 @@ export class JapModules extends LitElement {
 
       .no-result {
         margin: 1rem 0 0.5rem 0;
-        color: var(--color-text-muted);
+        color: var(--mdf-color-text-muted);
       }
     `,
   ];
@@ -179,7 +177,7 @@ export class JapModules extends LitElement {
     setDocumentTitle(`Exercises`);
 
     return html`
-      <h1>Exercises</h1>
+      <h1 class="mdf-title1">Exercises</h1>
       ${this._modulesTask.render({
         pending: () => html`<p>Loading exercises...</p>`,
         complete: (data: { modules: Modules; meta: ModulesMetadata }) => {
@@ -200,6 +198,7 @@ export class JapModules extends LitElement {
                     ${ref(this.inputRef)}
                     autocomplete="off"
                     autocorrect="off"
+                    class="mdf-input"
                   />
                 </div>
               </div>
@@ -250,7 +249,7 @@ export class JapModules extends LitElement {
                     </p>
                     <button
                       type="button"
-                      class="button"
+                      class="mdf-button"
                       @click="${this.onResetSearch}"
                     >
                       Reset the search

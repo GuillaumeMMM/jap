@@ -1,16 +1,14 @@
 import { html, LitElement, nothing, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
-import { Answer, Module, ModuleCard, ModuleType } from "../types/module";
+import { Answer, Module, ModuleCard } from "../types/module";
 import "./jap-module-success";
 import { createRef, Ref, ref } from "lit/directives/ref.js";
 
 @customElement("jap-module-exercise")
 export class JapModuleExercise extends LitElement {
   static styles = [
-    resetCSS,
-    sharedCSS,
+    ...sharedCSS,
     css`
       .question-container {
         display: flex;
@@ -31,19 +29,17 @@ export class JapModuleExercise extends LitElement {
         border-bottom-right-radius: 0;
       }
 
-      .form-row > .button:not(.full-button) {
-        border-left: none;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+      .form-row > .mdf-button:not(.full-button) {
+        margin-left: 1rem;
       }
 
       .error {
-        color: var(--color-error);
+        color: var(--mdf-color-error);
         margin-top: 0.5rem;
       }
 
       .indication {
-        color: var(--color-info);
+        color: var(--mdf-color-info);
       }
 
       .type-description {
@@ -143,7 +139,7 @@ export class JapModuleExercise extends LitElement {
             .cards=${this.cards}
             .answersRecap=${this.answersRecap}
           ></jap-module-success>`
-        : html`<div><a href="./" class="link">Go back to exercise</a></div>
+        : html`<div><a href="./" class="mdf-link">Go back to exercise</a></div>
             <div role="status">
               ${this._currentQIndex + 1}/${this.cards.length}
             </div>
@@ -166,13 +162,13 @@ export class JapModuleExercise extends LitElement {
                     autocorrect="off"
                     autocapitalize="off"
                     aria-hidden=${this._isWrong ? "true" : undefined}
-                    class=${this._isWrong ? "visually-hidden" : ""}
+                    class="mdf-input ${this._isWrong ? "visually-hidden" : ""}"
                     aria-label=${`Question : ${
                       this.cards[this._currentQIndex].q
                     }`}
                   />
                   <button
-                    class=${`button ${
+                    class=${`mdf-button ${
                       this._isWrong ? "full-button" : undefined
                     }`}
                     type=${this._isWrong ? "button" : "submit"}
@@ -196,7 +192,8 @@ export class JapModuleExercise extends LitElement {
                   ${this._isWrong
                     ? html`<p class="error">
                           Wrong answer. You should have typed
-                          <span class="emphasis">"${currentCard.a[0]}"</span>.
+                          <span class="mdf-emphasis">"${currentCard.a[0]}"</span
+                          >.
                         </p>
                         ${currentCard.indication &&
                         html`<p class="indication">

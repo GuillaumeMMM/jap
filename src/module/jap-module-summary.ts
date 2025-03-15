@@ -1,14 +1,12 @@
 import { html, LitElement, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
 import { ExerciseMode, Module } from "../types/module";
 
 @customElement("jap-module-summary")
 export class JapModuleSummary extends LitElement {
   static styles = [
-    resetCSS,
-    sharedCSS,
+    ...sharedCSS,
     css`
       .back {
         display: inline-flex;
@@ -24,7 +22,7 @@ export class JapModuleSummary extends LitElement {
         margin: 0.5rem 0;
       }
 
-      .button {
+      .mdf-button {
         display: inline-block;
         margin-top: 16px;
       }
@@ -41,20 +39,20 @@ export class JapModuleSummary extends LitElement {
 
   render() {
     return html` <div>
-        <a href="/modules" class="back link">
+        <a href="/modules" class="back mdf-link">
           <div>Go back to exercises</div></a
         >
       </div>
       <h1>${this.module.name}</h1>
       <form>
-        <label for="mode-select"
-          >How many questions do you want to answer ?</label
-        >
-        <div>
+        <div class="mdf-select-control">
+          <label for="mode-select"
+            >How many questions do you want to answer ?</label
+          >
           <select
             name="mode"
             id="mode-select"
-            class="select"
+            class="mdf-select"
             @change=${this.onModeChanges}
           >
             <option value="all" .selected=${this.mode === "all"}>
@@ -76,7 +74,7 @@ export class JapModuleSummary extends LitElement {
         </div>
       </form>
       <div>
-        <a class="button" href="./exercise"
+        <a class="mdf-button" href="./exercise"
           >Start the exercise<span aria-hidden="true">&nbsp;📚</span></a
         >
       </div>

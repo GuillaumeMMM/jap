@@ -1,6 +1,5 @@
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import resetCSS from "../styles/reset";
 import { Task } from "@lit/task";
 import sharedCSS from "../styles/shared.js";
 import "./jap-module-summary";
@@ -11,7 +10,7 @@ import { setDocumentTitle } from "../utils/document";
 
 @customElement("jap-module")
 export class JapModule extends LitElement {
-  static styles = [resetCSS, sharedCSS];
+  static styles = [...sharedCSS];
 
   @property() moduleId?: string;
 

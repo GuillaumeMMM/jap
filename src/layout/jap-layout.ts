@@ -1,11 +1,11 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import resetCSS from "../styles/reset.js";
+import sharedCSS from "../styles/shared.js";
 
 @customElement("jap-layout")
 export class JapLayout extends LitElement {
   static styles = [
-    resetCSS,
+    ...sharedCSS,
     css`
       .jap-main {
         padding: 1rem;

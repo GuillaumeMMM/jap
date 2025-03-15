@@ -1,14 +1,12 @@
 import { html, LitElement, css, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import resetCSS from "../styles/reset";
 import sharedCSS from "../styles/shared.js";
 import { Answer, Module, ModuleCard } from "../types/module";
 
 @customElement("jap-module-success")
 export class JapModuleSuccess extends LitElement {
   static styles = [
-    resetCSS,
-    sharedCSS,
+    ...sharedCSS,
     css`
       p {
         margin: 0.5rem 0;
@@ -61,7 +59,7 @@ export class JapModuleSuccess extends LitElement {
         You have ${correctCards.length} correct answers over
         ${this.cards.length} questions.
       </p>
-      <a href="/modules" class="link">Back to exercises</a>
+      <a href="/modules" class="mdf-link">Back to exercises</a>
       <p>Here is the recap :</p>
       <table>
         <thead>

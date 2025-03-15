@@ -1,6 +1,5 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import resetCSS from "../styles/reset.js";
 import sharedCSS from "../styles/shared.js";
 import { setDocumentTitle } from "../utils/document.js";
 import "./jap-profile-login.js";
@@ -13,7 +12,7 @@ import { User } from "../types/user.js";
 export class JapProfile extends LitElement {
   @consume({ context: userContext }) userContext: UserContext;
 
-  static styles = [resetCSS, sharedCSS, css``];
+  static styles = sharedCSS;
 
   @state() isLoggedIn = Boolean(localStorage.getItem("token"));
 
@@ -53,7 +52,7 @@ export class JapProfile extends LitElement {
               Welcome ${this.capitalizeFirstLetter(data.user.username)}
               <span aria-hidden="true">👋</span>
             </h1>
-            <a class="link" href="../">Back</a>`,
+            <a class="mdf-link" href="../">Back</a>`,
           error: (e) => {
             localStorage.removeItem("token");
             window.location.reload();
